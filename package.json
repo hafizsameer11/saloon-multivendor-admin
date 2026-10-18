@@ -1,0 +1,21 @@
+{
+  "name": "mybeauty-plus",
+  "private": true,
+  "description": "MyBeauty+ multi-vendor beauty marketplace (monorepo)",
+  "scripts": {
+    "install:web": "npm --prefix apps/web install",
+    "dev": "npm --prefix apps/web run dev",
+    "build": "npm --prefix apps/web run build",
+    "typecheck": "npm --prefix apps/web run typecheck",
+    "install:mobile": "npm --prefix apps/mobile install",
+    "mobile": "npm --prefix apps/mobile run start",
+    "mobile:web": "npm --prefix apps/mobile run web",
+    "typecheck:mobile": "npm --prefix apps/mobile run typecheck",
+    "install:api": "npm --prefix apps/api install",
+    "install:all": "npm --prefix apps/api install && npm --prefix apps/web install && npm --prefix apps/mobile install",
+    "api": "npm --prefix apps/api run dev",
+    "api:seed": "npm --prefix apps/api run seed",
+    "api:test": "npm --prefix apps/api test",
+    "typecheck:api": "npm --prefix apps/api run typecheck"
+  }
+}

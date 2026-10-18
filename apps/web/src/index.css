@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Theme tokens (R G B) ── dark is the brand default; light is opt-in via <html data-theme="light"> */
+:root, .on-dark, .day {
+  --onyx: 14 13 15; --graphite: 26 24 25; --graphite-2: 34 31 32; --graphite-3: 20 18 19; --smoke: 46 42 43;
+  --ivory: 244 238 230; --ivory-2: 234 225 212; --ivory-3: 221 210 196; --ink: 27 23 22;
+  --mute: 156 148 140; --mute-2: 111 104 98; --gold: 207 174 110; --err: 255 143 143; --shadow: 0 0 0;
+}
+:root { color-scheme: dark; }
+[data-theme='light'] {
+  color-scheme: light;
+  --onyx: 247 242 235; --graphite: 255 255 255; --graphite-2: 251 248 244; --graphite-3: 241 234 225; --smoke: 228 218 206;
+  --ivory: 27 23 22; --ivory-2: 64 56 52; --ivory-3: 96 87 80; --ink: 247 242 235;
+  --mute: 112 103 96; --mute-2: 140 131 123; --gold: 150 115 50; --err: 186 32 42; --shadow: 60 40 20;
+}
+/* sections that must keep the original palette in both themes:
+   .day = ivory "daylight" shop sections, .on-dark = text over photos / dark overlays */
+[data-theme='light'] .on-dark, [data-theme='light'] .day {
+  --onyx: 14 13 15; --graphite: 26 24 25; --graphite-2: 34 31 32; --graphite-3: 20 18 19; --smoke: 46 42 43;
+  --ivory: 244 238 230; --ivory-2: 234 225 212; --ivory-3: 221 210 196; --ink: 27 23 22;
+  --mute: 156 148 140; --mute-2: 111 104 98; --gold: 207 174 110; --err: 255 143 143; --shadow: 0 0 0;
+}
+/* inherited text colour is computed on <body>, so photo areas must set it again */
+[data-theme='light'] .on-dark { color: rgb(var(--ivory)); }
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-onyx text-ivory font-sans antialiased; font-size: 15px; line-height: 1.55; }
+  ::selection { background: #B3202A; color: #F4EEE6; }
+  h1, h2, h3, h4 { @apply font-serif font-medium; letter-spacing: -0.01em; }
+  input, select, textarea, button { font: inherit; }
+  :focus-visible { outline: 2px solid #CFAE6E; outline-offset: 2px; border-radius: 6px; }
+  * { scrollbar-width: thin; scrollbar-color: rgb(var(--smoke)) transparent; }
+  /* grid items may shrink below their content width (prevents horizontal overflow on phones) */
+  .grid > * { min-width: 0; }
+}
+
+@layer components {
+  .wrap { @apply mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-10; }
+  .eyebrow { @apply text-[11px] uppercase tracking-eyebrow text-gold; }
+  .hairline { height: 1px; background: linear-gradient(90deg, transparent, rgba(207,174,110,.5) 20%, rgba(207,174,110,.5) 80%, transparent); }
+  .card { @apply rounded-[26px] border border-smoke bg-graphite; }
+  .card-hover { @apply transition duration-300 hover:-translate-y-1 hover:border-gold/40; }
+  .field { @apply w-full rounded-2xl border border-smoke bg-graphite-2 px-4 py-3 text-[14px] text-ivory placeholder:text-mute/70 outline-none transition focus:border-gold/60; }
+  .day .field { @apply border-ivory-3 bg-white text-ink placeholder:text-mute-2; }
+  .label { @apply mb-1.5 block text-[11px] uppercase tracking-[.18em] text-mute; }
+  .link-u { @apply underline decoration-gold/40 underline-offset-4 hover:decoration-gold; }
+  .italic-gold { @apply font-serif italic text-gold; }
+  .scroll-x { @apply flex gap-3 overflow-x-auto pb-2; scrollbar-width: none; }
+  .scroll-x::-webkit-scrollbar { display: none; }
+  .img-zoom img { transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+  .img-zoom:hover img { transform: scale(1.06); }
+  .outline-num { color: transparent; -webkit-text-stroke: 1px rgb(var(--gold)); }
+  /* readable text on solid brand colours, in both themes (explicit text-* classes still win) */
+  .bg-crimson, .bg-crimson-dark { color: #F4EEE6; }
+  .grain::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 60; opacity: .05;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+  .day { @apply bg-ivory text-ink; }
+  .day .card { @apply border-ivory-3 bg-white; }
+}
+
+.leaflet-container { background: rgb(var(--graphite-3)); }

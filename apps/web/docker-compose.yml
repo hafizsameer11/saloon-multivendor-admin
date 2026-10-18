@@ -1,0 +1,12 @@
+# Dokploy → Docker Compose (repo root = GitHub project root)
+# Set env VITE_API_URL to your public API, e.g. https://api.example.com/api/v1
+services:
+  web:
+    build:
+      context: ../..
+      dockerfile: apps/web/Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-}
+    ports:
+      - "80:80"
+    restart: unless-stopped
